@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ master ]  # или main, в зависимости от твоей ветки
+    branches: [ master ]
 
 permissions:
   contents: read
