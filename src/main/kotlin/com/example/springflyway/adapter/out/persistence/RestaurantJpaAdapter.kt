@@ -15,4 +15,5 @@ open class RestaurantJpaAdapter(
     override fun findAll(): List<RestaurantEntity> = jpaRepository.findAll()
     override fun update(restaurant: RestaurantEntity): RestaurantEntity = jpaRepository.save(restaurant)
     override fun deleteById(id: Long) = jpaRepository.deleteById(id)
+    override fun existsByName(name: String): Boolean = jpaRepository.existsByName(name)
 }

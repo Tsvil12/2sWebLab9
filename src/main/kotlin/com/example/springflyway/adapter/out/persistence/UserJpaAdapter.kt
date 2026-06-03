@@ -15,4 +15,5 @@ open class UserJpaAdapter(
     override fun findAll(): List<UserEntity> = jpaRepository.findAll()
     override fun update(user: UserEntity): UserEntity = jpaRepository.save(user)
     override fun deleteById(id: Long) = jpaRepository.deleteById(id)
+    override fun existsByEmail(email: String): Boolean = jpaRepository.existsByEmail(email)
 }

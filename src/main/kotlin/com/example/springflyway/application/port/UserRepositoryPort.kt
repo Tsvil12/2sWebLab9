@@ -8,4 +8,5 @@ interface UserRepositoryPort {
     fun findAll(): List<UserEntity>
     fun update(user: UserEntity): UserEntity
     fun deleteById(id: Long)
+    fun existsByEmail(email: String): Boolean
 }

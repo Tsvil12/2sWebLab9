@@ -8,4 +8,5 @@ interface RestaurantRepositoryPort {
     fun findAll(): List<RestaurantEntity>
     fun update(restaurant: RestaurantEntity): RestaurantEntity
     fun deleteById(id: Long)
+    fun existsByName(name: String): Boolean
 }

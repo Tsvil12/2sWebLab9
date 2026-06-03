@@ -21,7 +21,7 @@ class RestaurantController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<RestaurantDto> {
-        val entity = service.findById(id) ?: return ResponseEntity.notFound().build()
+        val entity = service.findById(id)
         return ResponseEntity.ok(RestaurantMapper.toDto(entity))
     }
 
@@ -30,7 +30,6 @@ class RestaurantController(
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody dto: RestaurantDto): ResponseEntity<RestaurantDto> {
-        if (service.findById(id) == null) return ResponseEntity.notFound().build()
         val entity = RestaurantMapper.toEntity(dto.copy(id = id))
         val updated = service.update(entity)
         return ResponseEntity.ok(RestaurantMapper.toDto(updated))
@@ -38,7 +37,6 @@ class RestaurantController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Void> {
-        if (service.findById(id) == null) return ResponseEntity.notFound().build()
         service.deleteById(id)
         return ResponseEntity.noContent().build()
     }
