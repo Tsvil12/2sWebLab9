@@ -5,6 +5,7 @@ import com.example.springflyway.application.exception.AlreadyExistsException
 import com.example.springflyway.application.exception.NotFoundException
 import com.example.springflyway.application.port.RestaurantRepositoryPort
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
@@ -28,6 +29,7 @@ open class RestaurantService(
             ?: throw NotFoundException("Ресторан с id=$id не найден")
     }
 
+    @CacheEvict(cacheNames = ["restaurants"], allEntries = true)
     fun create(restaurant: RestaurantEntity): RestaurantEntity {
         if (repository.existsByName(restaurant.name)) {
             logger.warn { "Попытка создать ресторан с дублирующимся именем: ${restaurant.name}" }
@@ -38,6 +40,7 @@ open class RestaurantService(
         return saved
     }
 
+    @CacheEvict(cacheNames = ["restaurants"], allEntries = true)
     fun update(restaurant: RestaurantEntity): RestaurantEntity {
         if (repository.findById(restaurant.id) == null) {
             throw NotFoundException("Ресторан с id=${restaurant.id} не найден")
@@ -47,6 +50,7 @@ open class RestaurantService(
         return updated
     }
 
+    @CacheEvict(cacheNames = ["restaurants"], allEntries = true)
     fun deleteById(id: Long) {
         if (repository.findById(id) == null) {
             throw NotFoundException("Ресторан с id=$id не найден")

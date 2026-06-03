@@ -3,6 +3,7 @@ package com.example.springflyway.application.service
 import com.example.springflyway.adapter.out.persistence.entity.DishEntity
 import com.example.springflyway.application.port.DishRepositoryPort
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
@@ -25,8 +26,14 @@ open class DishService(
         return repository.findById(id)
     }
 
+    @CacheEvict(cacheNames = ["dishes"], allEntries = true)
     fun create(dish: DishEntity): DishEntity = repository.save(dish)
+
     fun findAll(namePart: String?): List<DishEntity> = repository.findAll()
+
+    @CacheEvict(cacheNames = ["dishes"], allEntries = true)
     fun update(dish: DishEntity): DishEntity = repository.update(dish)
+
+    @CacheEvict(cacheNames = ["dishes"], allEntries = true)
     fun deleteById(id: Long) = repository.deleteById(id)
 }
