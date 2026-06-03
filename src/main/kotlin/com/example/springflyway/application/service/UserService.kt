@@ -38,4 +38,5 @@ class UserService(
         userRepository.deleteById(id)
         logger.info { "Удалён пользователь с id=$id" }
     }
+    fun findByEmail(email: String): UserEntity? = userRepository.findByEmail(email)
 }

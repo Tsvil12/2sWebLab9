@@ -5,6 +5,7 @@ import com.example.springflyway.application.service.RestaurantService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -13,6 +14,7 @@ class RestaurantController(
     private val service: RestaurantService
 ) {
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     fun create(@Valid @RequestBody dto: RestaurantDto): ResponseEntity<RestaurantDto> {
         val entity = RestaurantMapper.toEntity(dto)
         val saved = service.create(entity)
@@ -29,6 +31,7 @@ class RestaurantController(
     fun getAll(): List<RestaurantDto> = service.findAll().map { RestaurantMapper.toDto(it) }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     fun update(@PathVariable id: Long, @RequestBody dto: RestaurantDto): ResponseEntity<RestaurantDto> {
         val entity = RestaurantMapper.toEntity(dto.copy(id = id))
         val updated = service.update(entity)
@@ -36,6 +39,7 @@ class RestaurantController(
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     fun delete(@PathVariable id: Long): ResponseEntity<Void> {
         service.deleteById(id)
         return ResponseEntity.noContent().build()
