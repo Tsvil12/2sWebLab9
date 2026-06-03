@@ -9,4 +9,5 @@ interface UserRepositoryPort {
     fun update(user: UserEntity): UserEntity
     fun deleteById(id: Long)
     fun existsByEmail(email: String): Boolean
+    fun findByEmail(email: String): UserEntity?
 }
