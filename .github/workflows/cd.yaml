@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 permissions:
   contents: read
@@ -32,3 +32,6 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/tsvil12/spring-auth:latest
+          build-args: |
+            REDIS_HOST=redis
+            REDIS_PORT=6379
