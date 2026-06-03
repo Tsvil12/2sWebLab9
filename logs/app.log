@@ -1335,3 +1335,9 @@ Caused by: org.hibernate.InstantiationException: No default constructor for enti
 2026-06-03 23:19:20.101 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.first_name,u1_0.is_active,u1_0.last_name,u1_0.password,u1_0.role from users u1_0 where u1_0.email=?
 2026-06-03 23:19:20.187 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.first_name,u1_0.is_active,u1_0.last_name,u1_0.password,u1_0.role from users u1_0 where u1_0.email=?
 2026-06-03 23:19:20.192 [http-nio-8080-exec-1] INFO  c.e.s.a.service.AuthService - Вход пользователя: user@test.com
+2026-06-03 23:19:48.051 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.email=? fetch first ? rows only
+2026-06-03 23:19:48.132 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - insert into users (email,first_name,is_active,last_name,password,role) values (?,?,?,?,?,?)
+2026-06-03 23:19:48.141 [http-nio-8080-exec-2] INFO  c.e.s.a.service.AuthService - Зарегистрирован пользователь: admin@test.com
+2026-06-03 23:19:52.538 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.first_name,u1_0.is_active,u1_0.last_name,u1_0.password,u1_0.role from users u1_0 where u1_0.email=?
+2026-06-03 23:19:52.609 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.first_name,u1_0.is_active,u1_0.last_name,u1_0.password,u1_0.role from users u1_0 where u1_0.email=?
+2026-06-03 23:19:52.612 [http-nio-8080-exec-3] INFO  c.e.s.a.service.AuthService - Вход пользователя: admin@test.com
