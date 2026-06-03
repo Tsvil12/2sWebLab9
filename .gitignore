@@ -3,3 +3,6 @@
 /out/
 /build/
 /*.iml
+.env
+.dockerignore
+*.log
