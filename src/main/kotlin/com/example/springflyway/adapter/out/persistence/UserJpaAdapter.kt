@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class UserJpaAdapter(
+open class UserJpaAdapter(
     private val jpaRepository: UserJpaRepository
 ) : UserRepositoryPort {
     override fun save(user: UserEntity): UserEntity = jpaRepository.save(user)

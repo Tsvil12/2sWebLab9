@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class DishJpaAdapter(
+open class DishJpaAdapter(
     private val jpaRepository: DishJpaRepository
 ) : DishRepositoryPort {
     override fun save(dish: DishEntity): DishEntity = jpaRepository.save(dish)

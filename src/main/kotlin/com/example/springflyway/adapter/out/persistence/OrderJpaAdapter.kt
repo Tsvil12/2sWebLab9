@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class OrderJpaAdapter(
+open class OrderJpaAdapter(
     private val jpaRepository: OrderJpaRepository
 ) : OrderRepositoryPort {
     override fun save(order: OrderEntity): OrderEntity = jpaRepository.save(order)

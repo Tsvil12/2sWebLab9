@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class RestaurantJpaAdapter(
+open class RestaurantJpaAdapter(
     private val jpaRepository: RestaurantJpaRepository
 ) : RestaurantRepositoryPort {
     override fun save(restaurant: RestaurantEntity): RestaurantEntity = jpaRepository.save(restaurant)
