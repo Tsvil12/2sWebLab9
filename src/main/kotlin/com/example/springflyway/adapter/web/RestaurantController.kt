@@ -2,6 +2,7 @@ package com.example.springflyway.adapter.web
 
 import com.example.springflyway.adapter.web.dto.RestaurantDto
 import com.example.springflyway.application.service.RestaurantService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,7 +13,7 @@ class RestaurantController(
     private val service: RestaurantService
 ) {
     @PostMapping
-    fun create(@RequestBody dto: RestaurantDto): ResponseEntity<RestaurantDto> {
+    fun create(@Valid @RequestBody dto: RestaurantDto): ResponseEntity<RestaurantDto> {
         val entity = RestaurantMapper.toEntity(dto)
         val saved = service.create(entity)
         return ResponseEntity.status(HttpStatus.CREATED).body(RestaurantMapper.toDto(saved))

@@ -2,6 +2,7 @@ package com.example.springflyway.adapter.web
 
 import com.example.springflyway.adapter.web.dto.UserDto
 import com.example.springflyway.application.service.UserService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,7 +13,7 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping
-    fun createUser(@RequestBody dto: UserDto): ResponseEntity<UserDto> {
+    fun createUser(@Valid @RequestBody dto: UserDto): ResponseEntity<UserDto> {
         val user = UserMapper.toEntity(dto)
         val saved = userService.createUser(user)
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(saved))
