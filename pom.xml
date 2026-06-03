@@ -20,6 +20,7 @@
     <properties>
         <kotlin.version>2.1.10</kotlin.version>
         <java.version>17</java.version>
+        <flyway.version>10.0.0</flyway.version>
     </properties>
 
     <dependencies>
@@ -39,10 +40,12 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,9 +94,9 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>10.0.0</version>
+                <version>${flyway.version}</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <url>jdbc:postgresql://localhost:5433/postgres</url>
                     <user>postgres</user>
                     <password>postgres</password>
                 </configuration>
