@@ -1,32 +1,40 @@
-# Лабораторная работа №4: Spring Boot + Flyway + PostgreSQL
+# Лабораторная работа №5: Обработка ошибок. Валидация. Логгирование
+
 Выполнил Цвиль Павел ФИТ-231
 ---
 ## Статус
 - Приложение запускается  
-- Все эндпоинты реализованы  
-- Тестирование в Postman пройдено
----
+- Все эндпоинты протестированы  
+- Валидация работает  
+- Ошибки возвращаются в едином формате  
+- Логи пишутся в консоль и файл
+
 ## Что сделано
 
-### Задание 1: PostgreSQL и Docker
-- Настроен Docker Compose с PostgreSQL
-- Подключение к БД в `application.yml`
+### 1. Иерархия кастомных исключений
+- `sealed class AppException` — базовый класс
+- `NotFoundException` (404) — ресурс не найден
+- `AlreadyExistsException` (409) — дубликат
+- `InvalidOrderStateException` (400) — недопустимый статус заказа
 
-### Задание 2: Flyway миграции
-- 5 миграций: users, restaurants, dishes, orders, order_dishes
-- Автоматическое применение при запуске
+### 2. Глобальный обработчик ошибок (@RestControllerAdvice)
+- `NotFoundException` -> 404
+- `AlreadyExistsException` -> 409
+- `InvalidOrderStateException` -> 400
+- `MethodArgumentNotValidException` -> 400
+- `Exception` -> 500 (без стека клиенту)
 
-### Задание 3: JPA сущности и связи
-- `User`, `Restaurant`, `Dish`, `Order` + `OrderStatus`
-- Связи: `@OneToMany`, `@ManyToOne`, `@ManyToMany`
+### 3. Валидация DTO
+- `@field:NotBlank`, `@field:Email`, `@field:Positive`, `@field:NotEmpty`
+- `@Valid` в контроллерах для `@RequestBody`
+- Все входные DTO валидируются перед обработкой
 
-### Задание 4: Эндпоинты по spec.yaml
-- CRUD для ресторанов (`/api/v1/restaurants`)
-- CRUD для блюд (`/api/v1/dishes`)
-- Получение меню ресторана (`GET /restaurants/{id}/dishes`)
-- Создание и получение заказов (`/api/v1/orders`)
+### 4. Логгирование
+- Библиотека `kotlin-logging`
+- Сервисы: INFO (создание/обновление), WARN (не найдено)
+- `GlobalExceptionHandler`: ERROR (непредвиденные ошибки с трейсом)
 
-### Задание 5: @EntityGraph
-- Оптимизация запросов: загрузка заказа с пользователем и блюдами
-- Загрузка меню ресторана
----
+### 5. Настройка логов (logback-spring.xml)
+- Консольный вывод
+- Файловый вывод с ротацией (FILE, 10MB, 30 дней)
+- Уровни: проект — DEBUG, Spring — WARN, Hibernate SQL — DEBUG
