@@ -1,7 +1,16 @@
 package com.example.springflyway.adapter.web.dto
 
-data class ErrorResponse(
+import java.time.LocalDateTime
+
+open class ErrorResponse(
     val status: Int,
-    val error: String,
-    val message: String
+    val message: String? = null,
+    val timestamp: LocalDateTime = LocalDateTime.now()
 )
+
+class ValidationErrorResponse(
+    status: Int,
+    message: String? = null,
+    val errors: Map<String, String>,
+    timestamp: LocalDateTime = LocalDateTime.now()
+) : ErrorResponse(status, message, timestamp)
