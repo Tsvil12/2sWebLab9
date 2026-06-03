@@ -1,40 +1,33 @@
-# Лабораторная работа №7: Безопасность (Spring Security + JWT)
+# Лабораторная работа №8: Документация API, контейнеризация и CI/CD
 
 ## Выполнил Цвиль Павел ФИТ-231
 ---
 ## Статус
-- Аутентификация (регистрация/логин) работает  
-- JWT токены генерируются и валидируются  
-- Авторизация по ролям USER/ADMIN  
-- Обработка ошибок 401/403
+- SpringDoc (Swagger UI) работает  
+- Dockerfile создан, образ собирается  
+- docker-compose поднимает весь стек (postgres + app + pgadmin)
+- Переменные окружения вынесены в .env  
+- GitHub Actions (CD) настроен и отрабатывает
 
 ## Что сделано
 
-### 1. Расширение сущности User
-- Добавлены поля `password` (BCrypt) и `role` (USER/ADMIN)
-- Flyway миграция `V6__add_password_and_role_to_users.sql`
+### 1. SpringDoc (Swagger)
+- Добавлена зависимость `springdoc-openapi-starter-webmvc-ui`
+- Открыт доступ к `/swagger-ui/**`, `/swagger-ui.html`, `/v3/api-docs/**` в SecurityConfig
+- Аннотированы эндпоинты в `RestaurantController` и `AuthController` (`@Operation`, `@ApiResponse`, `@Tag`)
+- Swagger UI доступен: `http://localhost:8080/swagger-ui.html`
 
-### 2. Аутентификация
-- `POST /auth/register` — регистрация нового пользователя, возвращает JWT
-- `POST /auth/login` — логин, возвращает JWT
-- Пароли хешируются с помощью BCryptPasswordEncoder
+### 2. Dockerfile
+- Создан `.dockerignore` (target/, .git/, .idea/, .env, *.md)
+- Образ собирается командой `docker build -t spring-auth:latest .`
 
-### 3. JWT
-- `JwtService` — генерация токена, валидация, извлечение email и роли
-- `JwtAuthenticationFilter` — проверяет токен в заголовке `Authorization: Bearer <token>`
+### 3. docker-compose.yml
+- Три сервиса: `postgres`, `app`, `pgadmin`
+- Переменные окружения вынесены в `.env`, добавлен `.env.example` в репозиторий
+- `.env` добавлен в `.gitignore`
 
-### 4. Spring Security
-- `SecurityConfig` — отключён CSRF, stateless сессии
-- Открыты эндпоинты: `/auth/**` и `GET /api/v1/restaurants/**`
-- Все остальные требуют аутентификации
-
-### 5. Авторизация (@PreAuthorize)
-- CRUD для ресторанов и блюд — только ADMIN
-- Создание заказа — USER или ADMIN
-- Просмотр заказа — владелец или ADMIN
-- Изменение статуса заказа — только ADMIN
-
-### 6. Обработка ошибок безопасности
-- `BadCredentialsException` → 401
-- `AccessDeniedException` → 403
-- Невалидный JWT → 401
+### 4. GitHub Actions (CD)
+- Создан `.github/workflows/cd.yaml`
+- Триггер: push в ветку `main`
+- Образ собирается и пушится в GHCR (GitHub Container Registry)
+- Тег: `ghcr.io/tsvil12/spring-auth`
