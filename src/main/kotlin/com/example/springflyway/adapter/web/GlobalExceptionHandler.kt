@@ -8,6 +8,8 @@ import com.example.springflyway.application.exception.NotFoundException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -58,6 +60,22 @@ class GlobalExceptionHandler {
                 "Validation error",
                 errors
             ))
+    }
+
+    @ExceptionHandler(BadCredentialsException::class)
+    fun handleBadCredentials(e: BadCredentialsException): ResponseEntity<ErrorResponse> {
+        logger.warn { "Ошибка аутентификации: ${e.message}" }
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Неверный email или пароль"))
+    }
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDenied(e: AccessDeniedException): ResponseEntity<ErrorResponse> {
+        logger.warn { "Доступ запрещён: ${e.message}" }
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(ErrorResponse(HttpStatus.FORBIDDEN.value(), "Доступ запрещён"))
     }
 
     @ExceptionHandler(Exception::class)

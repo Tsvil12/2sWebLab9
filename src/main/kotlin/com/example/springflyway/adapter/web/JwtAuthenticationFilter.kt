@@ -2,6 +2,7 @@ package com.example.springflyway.adapter.web
 
 import com.example.springflyway.application.service.JwtService
 import com.example.springflyway.application.service.UserDetailsServiceImpl
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -16,6 +17,8 @@ class JwtAuthenticationFilter(
     private val jwtService: JwtService,
     private val userDetailsService: UserDetailsServiceImpl
 ) : OncePerRequestFilter() {
+
+    private val logger = KotlinLogging.logger {}
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -41,6 +44,8 @@ class JwtAuthenticationFilter(
             authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
 
             SecurityContextHolder.getContext().authentication = authentication
+        } else {
+            logger.warn { "Невалидный JWT токен" }
         }
 
         filterChain.doFilter(request, response)
