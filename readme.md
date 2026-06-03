@@ -31,3 +31,6 @@
 - Триггер: push в ветку `main`
 - Образ собирается и пушится в GHCR (GitHub Container Registry)
 - Тег: `ghcr.io/tsvil12/spring-auth`
+
+## Так же прошу прощения за просроченный дедлайн по 9 лабе
+- https://github.com/Tsvil12/2sWebLab9 извините (
