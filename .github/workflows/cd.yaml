@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]  # или main, в зависимости от твоей ветки
 
 permissions:
   contents: read
@@ -31,4 +31,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/spring-auth:latest
+          tags: ghcr.io/tsvil12/spring-auth:latest
