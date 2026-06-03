@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1")
-class DishController(
+open class DishController(
     private val dishService: DishService,
     private val restaurantService: RestaurantService
 ) {

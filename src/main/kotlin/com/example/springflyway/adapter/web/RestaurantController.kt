@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
-class RestaurantController(
+open class RestaurantController(
     private val service: RestaurantService
 ) {
     @PostMapping

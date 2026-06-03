@@ -4,10 +4,12 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "restaurants")
-data class RestaurantEntity(
+class RestaurantEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    val name: String,
-    val address: String
-)
+    val name: String = "",
+    val address: String = ""
+) {
+    constructor() : this(0, "", "")
+}

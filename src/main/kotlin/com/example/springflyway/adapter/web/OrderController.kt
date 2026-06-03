@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/v1/orders")
-class OrderController(
+open class OrderController(
     private val orderService: OrderService,
     private val userService: UserService,
     private val dishService: DishService
